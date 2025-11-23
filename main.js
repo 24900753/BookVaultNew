@@ -28,18 +28,30 @@ auth.languageCode = "en";
 
 // -------------------- GOOGLE LOGIN --------------------
 const provider = new GoogleAuthProvider();
+
 document.getElementById("google-btn").addEventListener("click", () => {
+  
   signInWithPopup(auth, provider)
     .then((result) => {
-      alert("Logged in as: " + result.user.email);
 
-      localStorage.setItem("loggedInUser", result.user.email);
-      localStorage.setItem("userPhoto", result.user.photoURL);
+      const user = result.user;
+
+      alert("Logged in as: " + user.email);
+
+      // Save data
+      localStorage.setItem("loggedInUser", user.email);
+      localStorage.setItem("userPhoto", user.photoURL);
 
       window.location.href = "index.html";
     })
-    .catch(() => alert("Google Login Failed ❌"));
+
+    .catch((error) => {
+      console.error("Google Login Error:", error);
+      alert("Google Login Failed ❌");
+    });
+
 });
+
 
 
 // -------------------- EMAIL LOGIN --------------------
@@ -86,3 +98,4 @@ document.getElementById("signup-btn").addEventListener("click", () => {
       alert("❌ " + err.message);
     });
 });
+
