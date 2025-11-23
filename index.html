@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BookVault | Discover Your Next Great Read</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Poppins", sans-serif;
+      color: #2e1b1b;
+      background: linear-gradient(180deg, #fffdfb, #fff3ec);
+      overflow-x: hidden;
+    }
+
+    header {
+      width: 100%;
+      padding: 20px 70px;
+      background: rgba(255, 255, 255, 0.95);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(8px);
+      animation: fadeDown 1s ease;
+    }
+    .logo {
+      font-family: "Playfair Display", serif;
+      font-size: 1.8em;
+      color: #832323;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: 1px;
+    }
+    .logo::before { content: "🕮"; font-size: 1.5em; }
+    nav a {
+      text-decoration: none;
+      color: #6e2e2e;
+      margin: 0 18px;
+      font-weight: 500;
+      position: relative;
+      transition: 0.3s;
+    }
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0;
+      height: 2px;
+      background: #b64b4b;
+      transition: 0.3s;
+    }
+    nav a:hover::after, nav a.active::after { width: 100%; }
+
+    /* 👤 user icon and dropdown */
+    .user-menu {
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    .user-icon {
+      font-size: 1.8em;
+      color: #832323;
+    }
+    .dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 45px;
+      background: #fff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      width: 140px;
+    }
+    .dropdown a {
+      display: block;
+      padding: 10px 15px;
+      color: #832323;
+      text-decoration: none;
+      transition: 0.3s;
+      font-weight: 500;
+    }
+    .dropdown a:hover { background: #fce8e8; }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero {
+      padding: 170px 20px 100px;
+      text-align: center;
+      animation: fadeUp 1.5s ease;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero h1 {
+      font-family: "Playfair Display", serif;
+      font-size: 3.2em;
+      color: #2b0e0e;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      color: #6d4c4c;
+      font-size: 1.1em;
+      margin-bottom: 40px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+    .browse-btn {
+      background: linear-gradient(45deg, #b64b4b, #e08b8b);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      font-size: 1.1em;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: 0.4s ease;
+      box-shadow: 0 4px 12px rgba(182, 75, 75, 0.3);
+      font-weight: 600;
+    }
+    .browse-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(182, 75, 75, 0.5);
+      background: linear-gradient(45deg, #912b2b, #b65a5a);
+    }
+
+    .features {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      background: #f9f6f4;
+      padding: 70px 20px;
+      text-align: center;
+      gap: 80px;
+    }
+    .feature-item {
+      flex: 1 1 250px;
+      max-width: 300px;
+    }
+    .feature-icon {
+      background: #f0e2e2;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .feature-item h3 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.3em;
+      color: #3c1919;
+      margin-bottom: 10px;
+    }
+    .feature-item p {
+      color: #6b4a4a;
+      font-size: 0.95em;
+      line-height: 1.6;
+    }
+
+    #books { padding: 100px 50px; }
+    h2 {
+      text-align: center;
+      margin-bottom: 50px;
+      font-family: "Playfair Display", serif;
+      color: #2b0e0e;
+      font-size: 2.5em;
+    }
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+    }
+    .book-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      transition: 0.4s ease;
+    }
+    .book-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    .book-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+    .book-content { padding: 20px; }
+    .book-title {
+      font-family: "Playfair Display", serif;
+      font-size: 1.4em;
+      color: #421d1d;
+      margin-bottom: 5px;
+    }
+    .book-author { color: #a36a6a; font-weight: 500; margin-bottom: 15px; }
+    .book-desc { color: #5a3d3d; font-size: 0.95em; line-height: 1.5; margin-bottom: 25px; }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0 20px 20px;
+    }
+    .btn {
+      border: none;
+      padding: 8px 18px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.95em;
+      width: auto;
+    }
+    .btn-read { background: #792b2b; color: white; }
+    .btn-read:hover { background: #a34747; transform: scale(1.05); }
+    .btn-download { background: #f1e6e6; color: #5a3d3d; }
+    .btn-download:hover { background: #e7d4d4; transform: scale(1.05); }
+
+    .main-footer {
+      background: #fdfaf8;
+      padding: 80px 60px 30px;
+      color: #5e3b3b;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 60px;
+      border-top: 1px solid #e8d5d5;
+    }
+    .footer-logo {
+      font-family: "Playfair Display", serif;
+      color: #832323;
+      font-size: 1.4em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+    .footer-logo::before {
+      content: "📖";
+      font-size: 1.3em;
+    }
+    .footer-col h4 {
+      font-family: "Playfair Display", serif;
+      color: #3b1919;
+      font-size: 1.1em;
+      margin-bottom: 15px;
+    }
+    .footer-col a {
+      display: block;
+      text-decoration: none;
+      color: #6d4b4b;
+      margin-bottom: 8px;
+      transition: 0.3s;
+    }
+    .footer-col a:hover { color: #a33b3b; }
+    .footer-bottom {
+      text-align: center;
+      padding: 25px 20px;
+      font-size: 0.9em;
+      color: #7a5555;
+      border-top: 1px solid #f2dada;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">BookVault</div>
+    <nav>
+      <a href="index.html" class="active">Home</a>
+      <a href="book.html">Books</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <!-- 👤 User Menu -->
+    <div class="user-menu" id="userMenu">
+      <span class="user-icon">👤</span>
+      <div class="dropdown" id="dropdownMenu">
+  <a href="login.html" id="authBtn">Login</a>
+</div>
+    </div>
+  </header>
+
+  <section id="home" class="hero">
+    <h1>Discover Your Next Great Read</h1>
+    <p>Explore our curated collection of timeless classics and literary masterpieces.</p>
+    <a href="book.html"><button class="browse-btn">📚 Browse All Books</button></a>
+  </section>
+
+  <section class="features">
+    <div class="feature-item">
+      <div class="feature-icon"><span style="font-size: 30px;">🕮</span></div>
+      <h3>Read Online</h3>
+      <p>Instant access to thousands of books directly in your browser</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon"><img src="downloading.png" width="40" height="37"></div>
+      <h3>Download PDFs</h3>
+      <p>Take your favorite books with you for offline reading</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon"><img src="books-stack-of-three.png" width="35" height="37"></div>
+      <h3>Curated Collection</h3>
+      <p>Handpicked classics and literary treasures for every reader</p>
+    </div>
+  </section>
+
+  <section id="books">
+    <h2>Our Curated Book Collection</h2>
+    <div class="book-grid">
+      <div class="book-card">
+        <img src="https://images.unsplash.com/photo-1553729459-efe14ef6055d">
+        <div class="book-content">
+          <h3 class="book-title">Pride and Prejudice</h3>
+          <p class="book-author">Jane Austen</p>
+          <p class="book-desc">A romantic novel exploring love and morality in British society.</p>
+        </div>
+        <div class="buttons">
+          <button class="btn btn-read" onclick="accessBook('Rich Dad Poor Dad By Robert T. Kiyosaki, Nagalakshmi Shanmugham.pdf')">🕮 Read</button>
+          <button class="btn btn-download" onclick="accessDownload('Rich Dad Poor Dad By Robert T. Kiyosaki, Nagalakshmi Shanmugham.pdf')">⬇️ Download</button>
+        </div>
+      </div>
+
+      <div class="book-card">
+        <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794">
+        <div class="book-content">
+          <h3 class="book-title">The Great Gatsby</h3>
+          <p class="book-author">F. Scott Fitzgerald</p>
+          <p class="book-desc">A story of love, ambition, and illusion in the Roaring Twenties.</p>
+        </div>
+        <div class="buttons">
+          <button class="btn btn-read" onclick="accessBook('pdfs/great_gatsby.pdf')">🕮 Read</button>
+          <button class="btn btn-download" onclick="accessDownload('pdfs/great_gatsby.pdf')">⬇️ Download</button>
+        </div>
+      </div>
+
+      <div class="book-card">
+        <img src="https://images.unsplash.com/photo-1586486922635-27f5c64ef1c0">
+        <div class="book-content">
+          <h3 class="book-title">Moby Dick</h3>
+          <p class="book-author">Herman Melville</p>
+          <p class="book-desc">Captain Ahab’s relentless pursuit of the great white whale.</p>
+        </div>
+        <div class="buttons">
+          <button class="btn btn-read" onclick="accessBook('Rich Dad Poor Dad.pdf')">🕮 Read</button>
+          <button class="btn btn-download" onclick="accessDownload('Rich Dad Poor Dad.pdf')">⬇️ Download</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="main-footer">
+    <div class="footer-col">
+      <div class="footer-logo">BookVault</div>
+      <p>Your gateway to timeless literature and classic books.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="index.html">Home</a>4
+      <a href="book.html">Books</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="#">Project Gutenberg</a>
+      <a href="#">Public Domain Books</a>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <p>All books available on BookVault are in the public domain and free to read and download.</p>
+    </div>
+  </footer>
+
+  <div class="footer-bottom">© 2025 BookVault. Built with love for readers everywhere.</div>
+
+  <script>
+    // 👤 Dropdown toggle
+    const userMenu = document.getElementById("userMenu");
+    const dropdown = document.getElementById("dropdownMenu");
+
+    userMenu.addEventListener("click", () => {
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    });
+
+    window.addEventListener("click", (e) => {
+      if (!userMenu.contains(e.target)) dropdown.style.display = "none";
+    });
+
+    // 🔒 Access control
+    function accessBook(pdfLink) {
+      const user = localStorage.getItem("loggedInUser");
+      if (!user) {
+        alert("Please login to read books 📖");
+        window.location.href = "login.html";
+      } else {
+        window.open(pdfLink, "_blank");
+      }
+    }
+
+    function accessDownload(pdfLink) {
+      const user = localStorage.getItem("loggedInUser");
+      if (!user) {
+        alert("Please login to download books 📚");
+        window.location.href = "login.html";
+      } else {
+        const a = document.createElement("a");
+        a.href = pdfLink;
+        a.download = pdfLink.split("/").pop();
+        a.click();
+        alert("📕 Download started!");
+      }
+    }
+
+    // 🚪 Login/Logout toggle
+const authBtn = document.getElementById("authBtn");
+const loggedUser = localStorage.getItem("loggedInUser");
+
+if (loggedUser) {
+  authBtn.textContent = "Logout";
+  authBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.removeItem("loggedInUser");
+    alert("You have been logged out!");
+    window.location.href = "login.html";
+  });
+} else {
+  authBtn.textContent = "Login";
+  authBtn.href = "login.html";
+}
+
+  </script>
+</body>
+</html>

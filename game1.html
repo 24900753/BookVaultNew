@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Spy – Game</title>
+
+<!-- FONT -->
+<link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+
+<!-- JQUERY REQUIRED -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+/* ✅ ORIGINAL CSS BODY & STORY (NO CHANGE) */
+body{
+  width:100%;
+  height:100%;
+  margin:0;
+}
+
+.storytile{
+  position:fixed;
+  background:rgb(234, 212, 169);
+  border:2px rgb(143, 12, 12) ridge;
+  border-radius:5px;
+  padding:5px;
+  font-family:Share Tech Mono;
+  width:100%;
+  height:100%;
+  display:flex;              
+  justify-content:center;   
+  align-items:center;      
+}
+
+/* ✅ CONTENT AREA INSIDE TILE */
+.innertile1{
+  background:rgb(231, 204, 112);
+  border-radius:10px;
+  width:70%;
+  max-width:800px;
+  padding:40px;
+  text-align:center;
+  color:black;
+  box-shadow:0px 0px 20px rgba(0,0,0,0.4);
+}
+
+/* ✅ CENTER TEXT INSIDE */
+.inner-text{
+  text-align:center;
+}
+
+/* ✅ BUTTON WHITE + BLACK TEXT + DARK BROWN BORDER */
+button{
+  margin:15px;
+  padding:12px 30px;
+  font-size:18px;
+  border:3px solid #4b2e05;     /* Dark brown border */
+  border-radius:8px;
+  cursor:pointer;
+  background:white;             /* ✅ White background */
+  font-family:"Share Tech Mono";
+  color:black;                  /* ✅ Black text */
+  transition:0.25s ease-in-out;
+  box-shadow:0px 4px 10px rgba(0,0,0,0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hover animation */
+button:hover{
+  transform:scale(1.12);
+  box-shadow:0px 6px 14px rgba(0,0,0,0.45);
+}
+
+/* Click effect */
+button:active{
+  transform:scale(0.95);
+  box-shadow:0px 3px 6px rgba(0,0,0,0.3);
+}
+
+/* Boom/Plastic Animation */
+@keyframes boomPlastic {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+  }
+  50% {
+    transform: scale(1.2);
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+.boom-effect {
+  animation: boomPlastic 0.5s ease-out;
+}
+
+/* Plastic pieces effect */
+.plastic-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+@keyframes plasticFly {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(var(--tx, 50px), var(--ty, 50px)) rotate(360deg);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+
+<div class="storytile scene1" id="scene1"></div>
+<div class="storytile scene2" id="scene2"></div>
+<div class="storytile scene3" id="scene3"></div>
+<div class="storytile scene4" id="scene4"></div>
+<div class="storytile scene5" id="scene5"></div>
+<div class="storytile scene6" id="scene6"></div>
+<div class="storytile scene7" id="scene7"></div>
+<div class="storytile scene8" id="scene8"></div>
+<div class="storytile scene9" id="scene9"></div>
+<div class="storytile scene10" id="scene10"></div>
+<div class="storytile scene11" id="scene11"></div>
+<div class="storytile scene12" id="scene12"></div>
+<div class="storytile scene13" id="scene13"></div>
+<div class="storytile scene14" id="scene14"></div>
+<div class="storytile scene15" id="scene15"></div>
+<div class="storytile scene16" id="scene16"></div>
+<div class="storytile scene17" id="scene17"></div>
+<div class="storytile scene18" id="scene18"></div>
+<div class="storytile scene19" id="scene19"></div>
+<div class="storytile scene20" id="scene20"></div>
+<div class="storytile scene21" id="scene21"></div>
+<div class="storytile scene22" id="scene22"></div>
+<div class="storytile scene23" id="scene23"></div>
+<div class="storytile scene24" id="scene24"></div>
+<div class="storytile scene25" id="scene25"></div>
+<div class="storytile scene26" id="scene26"></div>
+<div class="storytile scene27" id="scene27"></div>
+<div class="storytile scene28" id="scene28"></div>
+<div class="storytile scene29" id="scene29"></div>
+<div class="storytile scene30" id="scene30"></div>
+<div class="storytile scene31" id="scene31"></div>
+<div class="storytile scene32" id="scene32"></div>
+<div class="storytile scene33" id="scene33"></div>
+<div class="storytile scene34" id="scene34"></div>
+<div class="storytile scene35" id="scene35"></div>
+<div class="storytile scene36" id="scene36"></div>
+<div class="storytile scene37" id="scene37"></div>
+<div class="storytile scene38" id="scene38"></div>
+<div class="storytile scene39" id="scene39"></div>
+<div class="storytile scene40" id="scene40"></div>
+<div class="storytile scene41" id="scene41"></div>
+<div class="storytile scene42" id="scene42"></div>
+<div class="storytile scene43" id="scene43"></div>
+<div class="storytile scene44" id="scene44"></div>
+<div class="storytile scene45" id="scene45"></div>
+<div class="storytile scene46" id="scene46"></div>
+<div class="storytile scene47" id="scene47"></div>
+<div class="storytile scene48" id="scene48"></div>
+<div class="storytile scene49" id="scene49"></div>
+<div class="storytile scene50" id="scene50"></div>
+<div class="storytile scene51" id="scene51"></div>
+<div class="storytile scene52" id="scene52"></div>
+
+<script>
+// Function to create plastic pieces animation
+function createPlasticPieces(button) {
+  const rect = button.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+  
+  for (let i = 0; i < 12; i++) {
+    const piece = document.createElement('div');
+    piece.classList.add('plastic-piece');
+    
+    // Random direction and distance
+    const angle = (i / 12) * Math.PI * 2;
+    const distance = 50 + Math.random() * 50;
+    const tx = Math.cos(angle) * distance;
+    const ty = Math.sin(angle) * distance;
+    
+    piece.style.setProperty('--tx', `${tx}px`);
+    piece.style.setProperty('--ty', `${ty}px`);
+    piece.style.left = `${centerX - 5}px`;
+    piece.style.top = `${centerY - 5}px`;
+    
+    // Random size and color variation
+    const size = 5 + Math.random() * 10;
+    piece.style.width = `${size}px`;
+    piece.style.height = `${size}px`;
+    
+    // Slight color variation for plastic effect
+    const colorValue = 200 + Math.random() * 55;
+    piece.style.background = `rgb(${colorValue}, ${colorValue}, ${colorValue})`;
+    piece.style.animation = `plasticFly 0.8s ease-out forwards`;
+    
+    document.body.appendChild(piece);
+    
+    // Remove piece after animation
+    setTimeout(() => {
+      if (piece.parentNode) {
+        piece.parentNode.removeChild(piece);
+      }
+    }, 800);
+  }
+}
+
+/* ✅ YOUR JS EXACT — WITH ANIMATION ADDED */
+var newTile = function(num,t1,t2,b1,b2,b3,s1,s2,s3){
+  $("#scene"+num).html('<div class = "innertile1"><div class = "inner-text"><h1>'+t1+'</h1><p>'+t2+'</p><a href = "#'+s1+'"><button class = "choice1-'+num+' btn btn-default">'+b1+'</button></a><a href = "#'+s2+'"><button class = "choice2-'+num+' btn btn-default">'+b2+'</button></a><a href = "#'+s3+'"><button class = "choice3-'+num+' btn btn-default">'+b3+'</button></a></div></div>');
+  $("."+s1).hide();
+  $("."+s2).hide();
+  $("."+s3).hide();
+  
+  // Add animation to button clicks
+  $(".choice1-"+num).on("click",function(e){ 
+    $(this).addClass('boom-effect');
+    createPlasticPieces(this);
+    setTimeout(() => {
+      $("."+s1).show(); 
+      $("#scene"+num).hide();
+      $(this).removeClass('boom-effect');
+    }, 500);
+  });
+  
+  $(".choice2-"+num).on("click",function(e){ 
+    $(this).addClass('boom-effect');
+    createPlasticPieces(this);
+    setTimeout(() => {
+      $("."+s2).show(); 
+      $("#scene"+num).hide();
+      $(this).removeClass('boom-effect');
+    }, 500);
+  });
+  
+  $(".choice3-"+num).on("click",function(e){ 
+    $(this).addClass('boom-effect');
+    createPlasticPieces(this);
+    setTimeout(() => {
+      $("."+s3).show(); 
+      $("#scene"+num).hide();
+      $(this).removeClass('boom-effect');
+    }, 500);
+  });
+};
+
+var fail = function(num,t1,t2,b1,b2,b3,s1,s2,s3){
+  $("#scene"+num).html('<div class = "innertile1"><div class = "inner-text"><h1>'+t1+'</h1><p>'+t2+'</p><a href = "#'+s1+'"><button class = "choice1-'+num+' btn btn-default">'+b1+'</button></a><a href = "#'+s2+'"><button class = "choice2-'+num+' btn btn-default">'+b2+'</button></a><a href = "#'+s3+'"><button class = "choice3-'+num+' btn btn-default">'+b3+'</button></a></div></div>');
+  
+  // Add animation to button clicks
+  $(".choice1-"+num).on("click",function(e){ 
+    $(this).addClass('boom-effect');
+    createPlasticPieces(this);
+    setTimeout(() => {
+      $("."+s1).show(); 
+      $("#scene"+num).hide();
+      $(this).removeClass('boom-effect');
+    }, 500);
+  });
+  
+  $(".choice2-"+num).on("click",function(e){ 
+    $(this).addClass('boom-effect');
+    createPlasticPieces(this);
+    setTimeout(() => {
+      $("."+s2).show(); 
+      $("#scene"+num).hide();
+      $(this).removeClass('boom-effect');
+    }, 500);
+  });
+  
+  $(".choice3-"+num).on("click",function(e){ 
+    $(this).addClass('boom-effect');
+    createPlasticPieces(this);
+    setTimeout(() => {
+      $("."+s3).show(); 
+      $("#scene"+num).hide();
+      $(this).removeClass('boom-effect');
+    }, 500);
+  });
+};
+
+/* 🎮 GAME DATA (UNCHANGED) */
+{
+newTile('1','The Spy: my first html game','<strong>rules:</strong><br>1. click the button with the answer that you think is right<br>2. Try your best to get to the end.<br><br>You are a spy sent on a mission. Your job is to bring a criminal...','Here','Okay!','I think I\'m sick...',"scene2","scene3","scene4");
+newTile('2','You Can Continue!','"Good", says your boss...','Use a grenade to blow the door down','Try to open the door','tell the boss that you quit the job','scene5','scene6','scene7');
+newTile('6','You try to open the door...','The door creaks open...','shout "VICTORY"','walk into the door quietly','walk into the building','scene5','scene8','scene9');
+newTile('9','So Close...','You walk into the very dark building...','say "Hello? anyone there?"','fire back at where the bullet came from','use your laser scope to scan the area','scene10','scene11','scene12');
+newTile('11','','A robot tumbles down...','shoot it again','throw it against a wall','move on','scene13','scene13','scene14');
+newTile('13','The Robot Dies','After you put it out...','call the police','look around','tell your boss','scene15','scene16','scene17');
+newTile('16','You look around the room...','You find the key!','use the key','put the key in your mouth','put key correctly','scene18','scene19','scene20');
+newTile('20','The door clicks open...','Dark hall...','walk into the hall','use scope','test rocket','scene21','scene22','scene23');
+newTile('22','Hall crawling with robots','...','grenade!','rocket','both','scene24','scene25','scene26');
+newTile('25','Just Enough power!','Robots destroyed','scan hall','go in','shoot another missile','scene27','scene28','scene29');
+newTile('27','Good choice!','Turret appears','A bullet','grenade','rocket','scene30','scene29','scene29');
+newTile('30','Close call!','Turret damaged','shoot barrel','fire at body','shoot metal box','scene31','scene32','scene32');
+newTile('32','Turret dies','Walk down hall','walk','walk with scope','shout','scene33','scene34','scene33');
+newTile('34','A Cyborg!','He attacks','shoot him','grenade','bash him','scene35','scene36','scene37');
+newTile('35','The Cyborg Falls','You handcuff him','continue','continue','continue','scene38','scene38','scene39');
+newTile('39','Good grammar','Mech illusion','move on','move on','move on','scene40','scene40','scene40');
+newTile('40','The mech is harmless!','Robot appears','shoot it','throw grenade','gamma ray','scene41','scene23','scene42');
+newTile('41','Extra armor','Shoot again','shoot blaster','shoot hand','shoot eye','scene43','scene44','scene45');
+newTile('43','Blaster explodes','Explore doors','shoot codepad','pick lock','kick door','scene46','scene47','scene48');
+newTile('46','Codepad breaks','Inside is portal','shoot bullet','go in','gamma ray','scene49','scene50','scene51');
+newTile('47','Door opens','Portal...','shoot bullet','go in','gamma ray','scene49','scene50','scene51');
+newTile('48','Door crashes','Portal...','shoot bullet','go in','gamma ray','scene49','scene50','scene51');
+newTile('51','You gamma-ray the portal...','You win!!!','You','Won!','Congrats!','scene52','scene52','scene52');
+}
+
+/* ❌ FAIL SCENES (NO CHANGE) */
+{
+fail('49','You end up shooting the suspect...','You failed','restart','retry','last choice','scene1','scene1','scene43');
+fail('38','Well well well...','Bad grammar leads to death','don\'t try again','<a href="https://www.khanacademy.org/humanities/grammar" target="_blank">take a grammar lesson</a>','die','scene35','','scene35');
+fail('18','','Wrong way. You failed','retry','last choice','restart','scene1','scene16','scene1');
+fail('3','Failure','"Sorry," says the boss...','retry','last choice','restart','scene1','scene1','scene1');
+fail('4','Failure!','You\'re fired','retry','last choice','restart','scene1','scene1','scene1');
+fail('7','','You quit','don\'t restart','second-to-last','don\'t retry','scene1','scene1','scene1');
+fail('8','Ha! trick question!','You walked into the door','restart','last choice','retry','scene1','scene6','scene1');
+fail('15','You Call The Police...','You failed','retry','last choice','restart','scene1','scene13','scene1');
+fail('17','you tell the boss...','Fired','retry','last choice','restart','scene1','scene13','scene1');
+fail('50','Suspect shoots you','You died','retry','restart','last choice','scene1','scene1','scene43');
+fail('45','False eye!','You died','restart','retry','random','scene1','scene1','scene41');
+fail('44','Bullet bounces','You died','try again','restart','last choice','scene1','scene1','scene41');
+fail('42','Robot melting','You died','try again','last choice','restart','scene1','scene40','scene1');
+fail('37','You died!','Cyborg tazors you','retry','last choice','revive','scene1','scene30','scene1');
+fail('36','Too much explosive power!','Everything explodes','try again','last choice','restart','scene1','scene34','scene1');
+fail('33','You Died!','Cyborg blasts you','try again!','restart','last choice','scene1','scene1','scene32');
+fail('31','EXPLODING TURRET!','You fall in pit','do not try again','don\'t retry','never restart','scene30','scene30','scene30');
+fail('29','Too much explosive power','BOOM','retry','last choice','restart','scene1','scene25','scene1');
+fail('28','Beware of turret!','You died','retry','last choice','restart','scene1','scene25','scene1');
+fail('26','Too much explosive power!','Everything explodes','retry','restart','last choice','scene1','scene1','scene22');
+fail('24','Not enough power!','Robots kill you','retry','last choice','restart','scene1','scene22','scene1');
+fail('23','Boooom!','Factory explodes','restart','last choice','retry','scene1','scene20','scene1');
+fail('21','you died!','Millions of bullets kill you','restart','retry','last choice','scene1','scene1','scene20');
+fail('19','You Choked and died!','Key stuck in throat','retry','lunatic brain test','restart','scene1','scene1','scene1');
+fail('5','You Died!','Criminal shoots you','retry','revive','restart','scene1','scene1','scene1');
+fail('10','You Died!','Robot shoots you','retry','restart','revive','scene1','scene1','scene1');
+fail('12','You Died!','Too slow','retry','last choice','revive','scene1','scene9','scene1');
+fail('14','You Just Died!','Robot shoots you','retry','last choice','restart','scene1','scene13','scene1');
+}
+</script>
+
+</body>
+</html>

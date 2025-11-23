@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Made by | BookVault</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(to bottom right, #fffdfb, #fce8e8);
+      color: #2e1b1b;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 1.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .profile-container {
+      text-align: center;
+      background: #fff;
+      border-radius: 25px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+      padding: 80px 40px 50px;
+      max-width: 400px;
+      width: 90%;
+      position: relative;
+      animation: popUp 1.2s ease;
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.9); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .profile-img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #fff;
+      box-shadow: 0 0 25px rgba(182, 75, 75, 0.8);
+      animation: glowPulse 2s infinite alternate;
+    }
+
+    @keyframes glowPulse {
+      0% { box-shadow: 0 0 15px rgba(182, 75, 75, 0.5); }
+      100% { box-shadow: 0 0 30px rgba(182, 75, 75, 1); }
+    }
+
+    h2 {
+      font-family: "Playfair Display", serif;
+      color: #832323;
+      font-size: 1.8em;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #6b4b4b;
+      font-size: 1.05em;
+      margin: 6px 0;
+    }
+
+    .highlight {
+      color: #832323;
+      font-weight: 600;
+    }
+
+    /* --- Social Icons --- */
+    .social-links {
+      margin: 25px 0 15px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .social-links a {
+      color: #832323;
+      font-size: 1.6em;
+      transition: 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: #b64b4b;
+      transform: scale(1.2);
+    }
+
+    .back-btn {
+      margin-top: 15px;
+      display: inline-block;
+      background: linear-gradient(135deg, #832323, #b64b4b);
+      color: #fff;
+      padding: 10px 25px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(131, 35, 35, 0.3);
+      transition: 0.3s ease;
+    }
+
+    .back-btn:hover {
+      transform: scale(1.07);
+      background: linear-gradient(135deg, #b64b4b, #832323);
+      box-shadow: 0 6px 18px rgba(131, 35, 35, 0.4);
+    }
+
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      color: #8c6b6b;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 600px) {
+      .profile-container {
+        padding: 40px 25px;
+      }
+      .profile-img {
+        width: 120px;
+        height: 120px;
+      }
+      .social-links a {
+        font-size: 1.3em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="profile-container">
+    <img src="me.jpg" alt="Profile Photo" class="profile-img" />
+    <h2>Vignesh V</h2>
+    <p><span class="highlight">Education:</span> B.Tech, AI&DS</p>
+    <p><span class="highlight">Institution:</span> Saveetha Engineering College</p>
+    <p><span class="highlight">Email:</span> vigneshvicky@example.com</p>
+
+    <!-- Social Icons Section -->
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/vignesh-vicky-33980132a/" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/VigneshVickyvgmvicky" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://www.instagram.com/alone_rider_vicky?igsh=MXJwdDhjemluZ3Qx" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+
+    <a href="contact.html" class="back-btn">← Back to Contact</a>
+  </div>
+
+  <footer>© 2025 BookVault | Designed by Vignesh 💫</footer>
+</body>
+</html>

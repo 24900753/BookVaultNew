@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BookVault | Categories</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background-color: #fdfcfb;
+      color: #2d2d2d;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background: linear-gradient(to right, #fff7f7, #fdf6f6);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #6b1b1b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 20px;
+      border-radius: 30px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+      transition: 0.4s ease;
+      outline: none;
+    }
+
+    .search-box input:focus {
+      box-shadow: 0 0 12px rgba(182, 75, 75, 0.5);
+      border-color: #b64b4b;
+      transform: scale(1.05);
+    }
+
+    .back-btn {
+      background-color: #6b1b1b;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      background-color: #541010;
+      transform: scale(1.05);
+    }
+
+    .content {
+      display: flex;
+      flex: 1;
+      height: calc(100vh - 80px);
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 290px;
+      background: #f6d2d2;
+      padding: 25px 20px;
+      overflow-y: auto;
+      border-radius: 0 15px 15px 0;
+    }
+
+    #categorySearch {
+      width: 88%;
+      padding: 12px 15px;
+      border-radius: 20px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #4b0d0d;
+      background: #f0baba;
+      text-align: center;
+      transition: 0.3s ease;
+    }
+
+    #categorySearch:focus {
+      transform: scale(1.05);
+      box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.3);
+    }
+
+    .category-item {
+      padding: 12px 5px;
+      font-size: 17px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      color: #2b0b0b;
+      font-weight: 500;
+      transition: 0.3s;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    }
+
+    .category-item:hover {
+      transform: translateX(5px);
+      color: #b13838;
+      font-weight: 600;
+    }
+
+    .book-area {
+      flex: 1;
+      padding: 30px 40px;
+      overflow-y: auto;
+    }
+
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .book-card {
+      border-radius: 12px;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: 0.3s;
+      position: relative;
+    }
+
+    .book-card img {
+      width: 65%;
+      height: 280px;
+      object-fit: cover;
+      margin-top: 10px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .save-btn {
+      position: absolute;
+      top: 0.3px;
+      right: 17%;
+      font-size: 30px;
+      cursor: pointer;
+      transition: 0.3s;
+      color: #b13838;
+    }
+
+    .save-btn.active {
+      color: black;
+      transform: scale(1.2);
+    }
+
+    @keyframes saveAnim {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: translate(60px,-60px) scale(0.3); opacity: 0; }
+    }
+
+    .book-actions {
+      background-color: #f4c7b3;
+      border-radius: 10px;
+      width: 90%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px 0;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .action-btn {
+      background-color: #e74c4c;
+      color: #000;
+      border: none;
+      padding: 8px 35px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px 0;
+      font-size: 13px;
+      color: #7a7a7a;
+      background-color: #ffffff;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+    }
+
+    .saved-box {
+      position: fixed;
+      right: 20px;
+      bottom: 80px;
+      background: #6b1b1b;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 16px;
+      z-index: 200;
+    }
+
+    /* ✅ Play Game button styling */
+    .game-btn {
+      position: fixed;
+      right: 20px;
+      bottom: 150px;
+      background-color: #ff5c5c;
+      color: white;
+      padding: 12px 22px;
+      border-radius: 25px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      transition: 0.4s ease;
+      z-index: 200;
+    }
+
+    .game-btn:hover {
+      transform: scale(1.12) rotate(3deg);
+      box-shadow: 0px 0px 12px rgba(255, 50, 50, 0.7);
+    }
+
+    #savedPopup {
+      position: fixed;
+      right: 20px;
+      bottom: 135px;
+      width: 240px;
+      background: #fff4f4;
+      border-radius: 12px;
+      padding: 12px;
+      display: none;
+      box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
+    }
+
+    #savedPopup h4 { margin: 0; color: #6b1b1b; margin-bottom: 10px; }
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🕮 BookVault</div>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search books or categories..." onkeyup="searchAll()" />
+  </div>
+
+  <button class="back-btn" onclick="window.location.href='book.html'">← Back to Books Page</button>
+</header>
+
+<div class="content">
+  <aside class="sidebar">
+    <input type="text" id="categorySearch" placeholder=" 🔎︎Search" onkeyup="filterCategory()">
+
+    <p class="category-title">📖 Fiction</p>
+    <div id="categoryList">
+      <div class="category-item" onclick="showBooks('Romance')">Romance <span class="arrow">➜</span></div>
+      <div class="category-item" onclick="showBooks('Thriller')">Thriller <span class="arrow">➜</span></div>
+
+      <p class="category-title">📘 Non-Fiction</p>
+      <div class="category-item" onclick="showBooks('Finance')">Finance <span class="arrow">➜</span></div>
+    </div>
+  </aside>
+
+  <section class="book-area" id="bookArea">
+    <h2>Select a Category 📚</h2>
+    <div class="book-grid" id="bookGrid"></div>
+  </section>
+</div>
+
+<!-- ✅ Game button positioned separately ABOVE saved button -->
+<button class="game-btn" onclick="window.location.href='indexgame.html'">▶ Play Game</button>
+
+<div class="saved-box" onclick="toggleSavedPopup()">🔖 Saved Books</div>
+
+<div id="savedPopup">
+  <h4>Saved Books</h4>
+  <div id="savedList"></div>
+</div>
+
+<footer>© 2025 BookVault. Made by Vignesh 💫</footer>
+
+<script>
+const bookData = {
+  Romance: [
+    {title: "Pride and Prejudice", desc: "A timeless romantic classic.", author: "Jane Austen", img: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f", file: "romance1.pdf"},
+    {title: "The Notebook", desc: "A heartwarming love story.", author: "Nicholas Sparks", img: "https://images.unsplash.com/photo-1507842217343-583bb7270b66", file: "romance2.pdf"}
+  ],
+
+  Thriller: [
+    {title: "Gone Girl", desc: "A psychological thriller.", author: "Gillian Flynn", img: "https://images.unsplash.com/photo-1551024601-bec78aea704b", file: "thriller1.pdf"}
+  ],
+
+  Finance: [
+    {title: "Rich Dad Poor Dad", desc: "A guide to financial freedom.", author: "Robert Kiyosaki", img: "rich.png", file: "Rich Dad Poor Dad.pdf"}
+  ]
+};
+
+let savedBooks = [];
+
+/* ✅ When category clicked, show category books */
+function showBooks(category) {
+  const grid = document.getElementById("bookGrid");
+  const title = document.querySelector(".book-area h2");
+  title.textContent = `${category} Books 📚`;
+  grid.innerHTML = "";
+
+  bookData[category].forEach(book => {
+    grid.appendChild(createBookCard(book));
+  });
+}
+
+/* ✅ Global Search - Search books + categories */
+function searchAll() {
+  let value = document.getElementById("searchInput").value.toLowerCase();
+  const grid = document.getElementById("bookGrid");
+  const title = document.querySelector(".book-area h2");
+
+  if (value === "") {
+    title.textContent = "Select a Category 📚";
+    grid.innerHTML = "";
+    return;
+  }
+
+  let results = [];
+
+  for (let category in bookData) {
+    bookData[category].forEach(book => {
+      if (
+        book.title.toLowerCase().includes(value) ||
+        category.toLowerCase().includes(value)
+      ) {
+        results.push(book);
+      }
+    });
+  }
+
+  title.textContent = `Search Results for "${value}"`;
+  grid.innerHTML = "";
+
+  results.length
+    ? results.forEach(book => grid.appendChild(createBookCard(book)))
+    : (grid.innerHTML = "<h3>No results found ❌</h3>");
+}
+
+/* ✅ Create book card function (used by search and categories) */
+function createBookCard(book) {
+  const card = document.createElement("div");
+  card.classList.add("book-card");
+
+  card.innerHTML = `
+    <div class="save-btn" onclick="toggleSave('${book.title}', this)">⛉</div>
+    <img src="${book.img}" alt="${book.title}">
+    <div class="book-actions">
+      <div class="book-info">
+        <h4>${book.title}</h4>
+        <p>${book.desc}</p>
+      </div>
+      <div class="button-row">
+        <button class="action-btn" onclick="readBook('${book.file}')">Read</button>
+        <button class="action-btn" onclick="downloadBook('${book.file}')">Download</button>
+      </div>
+    </div>
+  `;
+  return card;
+}
+
+function isLoggedIn() {
+  return localStorage.getItem("loggedInUser") !== null;
+}
+
+function readBook(pdfFile) {
+  if (!isLoggedIn()) {
+    alert("Please login to read books.");
+    window.location.href = "login.html";
+    return;
+  }
+  window.open(pdfFile, "_blank");
+}
+
+function downloadBook(pdfFile) {
+  if (!isLoggedIn()) {
+    alert("Please login to download books.");
+    window.location.href = "login.html";
+    return;
+  }
+  const a = document.createElement("a");
+  a.href = pdfFile;
+  a.download = pdfFile;
+  a.click();
+}
+
+function toggleSave(title, icon) {
+  icon.classList.toggle("active");
+  icon.style.animation = "saveAnim 0.6s forwards";
+
+  if (!savedBooks.includes(title)) savedBooks.push(title);
+  else savedBooks = savedBooks.filter(b => b !== title);
+
+  updateSavedList();
+}
+
+function updateSavedList() {
+  document.getElementById("savedList").innerHTML =
+    savedBooks.length ? savedBooks.map(b => `<p>✅ ${b}</p>`).join("") : "<p>No books saved</p>";
+}
+
+function toggleSavedPopup() {
+  const popup = document.getElementById("savedPopup");
+  popup.style.display = popup.style.display === "block" ? "none" : "block";
+}
+
+function filterCategory() {
+  const value = document.getElementById("categorySearch").value.toLowerCase();
+  document.querySelectorAll(".category-item").forEach(item => {
+    item.style.display = item.innerText.toLowerCase().includes(value) ? "flex" : "none";
+  });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tic Tac Doom</title>
+
+  <!-- GOOGLE FONTS (required by your CSS) -->
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech&family=Trade+Winds&family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+
+  <!-- JQUERY (required by your JS code) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+/* ✅ YOUR CSS — UNCHANGED */
+
+/* ------------------ CSS STARTS HERE ------------------ */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #FDE3A7;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+
+
+.game-narrative {
+  margin: 0 auto;
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  resize: both;
+  max-width: 700px;
+  flex-direction: column;
+  text-align: center;
+}
+
+.game-narrative-text {
+  font-family: 'Share Tech', sans-serif;
+  font-size: 2em;
+  margin: 10px;
+}
+
+.game-btn {
+  font-family: 'Share Tech', sans-serif;
+  font-size: 2em;
+  margin: 20px;
+  border-radius: 8px;
+  color: #ffffff;
+  background-color: #d35400;
+  padding: 10px 20px 10px 20px;
+  border: solid #F89406 2px;
+  text-decoration: none;
+}
+
+.game-btn:hover {
+  background-color: #e67e22;
+  text-decoration: none;
+}
+
+.game-btn:focus {
+  outline:0;
+}
+
+#narrative-three-btns {
+  display: flex;
+  flex-flow: row;
+}
+
+.dramatic-text {
+  font-family: 'Trade Winds', cursive;
+  font-size: 3em;
+}
+
+.computer-threat {
+  font-family: 'Trade Winds', cursive;
+  font-size: 1.5em;
+  margin-top: 20px;
+  color: #c0392b;
+}
+
+#header {
+  text-align: center;
+  margin: 10px;
+  margin-top: 30px;
+  color: #c0392b;
+}
+
+#game-configuration {
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  resize: both;
+}
+
+#identity-selection {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.identity {
+  margin: 0px 20px;
+}
+
+#identity-label {
+  color: #FFF;
+  font-family: 'Share Tech', sans-serif;
+  font-size: 2em;
+  text-align: center;
+  margin: 20px;
+}
+
+#game-grid {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.cell {
+  font-family: 'Gloria Hallelujah', cursive;
+  color: #FFFFFF;
+  background-color: #121a21;
+  text-align: center;
+  width: 100px;
+  height: 100px;
+  font-size: 3em;
+  margin: 5px;
+  border-radius: 10px;
+  box-shadow: 6px 6px 0px 0px #090d10;
+  transition-duration: 0.5s;
+}
+
+.cell:hover {
+  color: #e74c3c;
+  background-color: #34495e;
+}
+
+.cell-selected {
+  color: #c0392b;
+  transform: translate(3px,3px);
+  box-shadow: 3px 3px 0px 0px #000000;
+  background-color: #121a21;
+}
+
+.cell-selected:hover {
+  color: #c0392b;
+  background-color: #121a21;
+}
+
+.cell-win {
+  color: #e74c3c;
+  background-color: #34495e;
+  transition: all 1s ease-in-out;
+  transform: scale(1.05);
+}
+
+.cell-win:hover {
+  background-color: #34495e;
+}
+
+#game-over {
+  color: #FFF;
+  font-family: 'Share Tech', sans-serif;
+  margin: 0 auto;
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  resize: both;
+  max-width: 700px;
+  flex-direction: column;
+  text-align: center;
+}
+
+#game-end-heading {
+  font-size: 2em;
+  margin: 10px;
+}
+
+#game-end-subheading {
+  font-size: 1.5em;
+  margin: 10px;
+}
+
+#game-reset-btn {
+  font-family: 'Share Tech', sans-serif;
+  font-size: 2em;
+  margin: 20px;
+  border-radius: 8px;
+  color: #ffffff;
+  background-color: #d35400;
+  padding: 10px 20px 10px 20px;
+  border: solid #F89406 2px;
+  text-decoration: none;
+}
+#game-reset-btn hover {
+  background: #3cb0fd;
+}
+
+/* ------------------ CSS ENDS HERE ------------------ */
+</style>
+</head>
+
+<body>
+
+<div id="container">
+
+  <!-- ✅ YOUR HTML — UNCHANGED -->
+
+  <div class="game-narrative" id="game-narrative-one">
+    <p class="game-narrative-text">In a world where two forces battle for domination of a war-torn landscape, only one will draw the line and reign supreme.</p>
+    <button class="game-btn" id="narrative-one-btn">Continue</button>
+  </div>
+
+  <div class="game-narrative" id="game-narrative-two">
+    <p class="game-narrative-text">The year is 2048.</p>
+    <p class="game-narrative-text">In a post apocalyptic galaxy run by giant corporations, you are a cybernetically enhanced space marine with no memory of their past.</p>
+    <button class="game-btn" id="narrative-two-btn">Continue</button>
+  </div>
+
+  <div class="game-narrative" id="game-narrative-three">
+    <p class="game-narrative-text">Are you the chosen one foretold by prophecy?</p>
+    <p class="game-narrative-text">Do you have the strength to survive...</p>
+    <div id="narrative-three-btns">
+      <button class="game-btn" id="narrative-three-btn">YES</button>
+      <div></div>
+      <a class="game-btn" id="puppies-btn" href="https://au.pinterest.com/explore/puppy-pictures/" target="_blank">NO</a>
+    </div>
+  </div>
+
+  <div id="header">
+    
+    <p class="dramatic-text">
+      <span id="tic-text">Tic </span>
+      <span id="tac-text">Tac </span>
+      <span id="doom-text">DOOM</span>
+    </p>
+  </div>
+
+  <div id="game-configuration">
+    <h2 id="identity-label">Choose your mark</h2>
+    <div id="identity-selection" class="row">
+      <div class="cell identity-cell" value="X">X</div>
+      <div class="cell identity-cell" value="O">O</div>
+    </div>
+  </div>
+
+  <div id="game-grid">
+    <div class="row">
+      <div class="cell game-cell" id="c00"></div>
+      <div class="cell game-cell" id="c01"></div>
+      <div class="cell game-cell" id="c02"></div>
+    </div>
+    <div class="row">
+      <div class="cell game-cell" id="c10"></div>
+      <div class="cell game-cell" id="c11"></div>
+      <div class="cell game-cell" id="c12"></div>
+    </div>
+    <div class="row">
+      <div class="cell game-cell" id="c20"></div>
+      <div class="cell game-cell" id="c21"></div>
+      <div class="cell game-cell" id="c22"></div>
+    </div>
+    <div class="computer-threat">
+      <p><span id="computer-threat-text"></span></p>
+    </div>
+  </div>
+
+  <div id="game-over">
+    <h2 id="game-end-heading"></h2>
+    <h3 id="game-end-subheading"></h3>
+    <button class="game-btn" id="game-reset-btn">&#8634; Play again</button>
+  </div>
+
+</div>
+
+
+<!-- ✅ YOUR JS — UNCHANGED -->
+<script>
+
+// The ENTIRE JS you provided goes here (unchanged)
+
+var game = {
+  board: [[null, null, null],
+          [null, null, null],
+          [null, null, null]],
+  playerMark: "",
+  aiMark: "",
+  turnsPlayed: 0,
+  playerTurn: true,
+  nextMove: [null, null],
+  winner: "",
+  gameOver: false
+}
+
+var darkColor = "#2c3e50";
+
+var $narrativeOne = $("#game-narrative-one");
+var $narrativeTwo = $("#game-narrative-two");
+var $narrativeThree = $("#game-narrative-three");
+var $narrativeFour = $("#game-narrative-four");
+
+var computerThreats = ["Prepare to suffer extreme humiliation!",
+                      "I will destroy you!",
+                      "I am invincible!",
+                      "You cannot defeat me!",
+                      "You will be annihilated!",
+                      "You will fail!",
+                      "Fear me!",
+                      "Vengeance is mine!",
+                      "I hunger!"]
+
+var $identityBtn = $(".identity-cell");
+var $gameBtn = $(".game-cell");
+var $gameResetBtn = $("#game-reset-btn");
+
+$(document).ready(function() {
+  $narrativeOne.hide();
+  $narrativeTwo.hide();
+  $narrativeThree.hide();
+  $narrativeFour.hide();
+  $("#header").hide();
+  $("#game-configuration").hide();
+  $("#game-grid").hide();
+  $("#game-over").hide();
+  
+  $narrativeOne.fadeIn(500);
+});
+
+$("#narrative-one-btn").on('click', function() {
+  var transitionPeriod = 500;
+  $narrativeOne.fadeOut(transitionPeriod);
+  setTimeout(function() {
+    $narrativeTwo.fadeIn(transitionPeriod);
+  }, transitionPeriod);
+});
+
+$("#narrative-two-btn").on('click', function() {
+  var transitionPeriod = 500;
+  $narrativeTwo.fadeOut(transitionPeriod);
+  setTimeout(function() {
+    $narrativeThree.fadeIn(transitionPeriod);
+  }, transitionPeriod);
+});
+
+$("#narrative-three-btn").on('click', function() {
+  var transitionPeriod = 500;
+  $narrativeThree.fadeOut(transitionPeriod);
+  setTimeout(function() {
+    $("#tic-text").hide();
+    $("#tac-text").hide();
+    $("#doom-text").hide();
+    $("#header").show();
+    
+    $("#tic-text").show();
+    setTimeout(function(){
+      $("#tac-text").show();
+      setTimeout(function() {
+        $("body").css("background-color", darkColor);
+        $("#doom-text").show();
+        
+        setTimeout(function(){
+          $("#game-configuration").fadeIn(transitionPeriod);
+          
+        }, transitionPeriod * 2);
+      }, transitionPeriod * 2);
+    }, transitionPeriod * 2);
+  }, transitionPeriod * 2);
+});
+
+$identityBtn.on('click', function() {
+  game.playerMark = $(this).attr("value");
+  if (game.playerMark === "X"){
+    game.aiMark = "O";
+  } else {
+    game.aiMark = "X";
+  }
+  startGame();
+});
+
+function startGame(){
+  $("#game-configuration").hide();
+  $("#game-grid").fadeIn(500);
+  if (!game.playerTurn)
+    aiPlay();
+}
+
+$gameBtn.on('click', function() {
+  if (game.playerTurn) {
+    var cell = $(this).attr("id");
+    var row = parseInt(cell[1]);
+    var col = parseInt(cell[2]);
+
+    if (spaceFree(game.board, row, col)) {
+      makePlay(game.playerMark, row, col);
+      checkPlay(game.playerMark);
+    }
+  }
+});
+
+function aiPlay() {
+  var aiThinkingDelay = 1000;
+  setTimeout(function() {
+    minimax(game, 0);
+    makePlay(game.aiMark, game.nextMove[0], game.nextMove[1]);
+    checkPlay(game.aiMark);
+    
+    var randThreat = computerThreats[Math.floor(Math.random() * computerThreats.length)];
+    $("#computer-threat-text").text(randThreat);
+    $("#computer-threat-text").fadeIn(250);
+    setTimeout(function() {
+      $("#computer-threat-text").fadeOut(250);
+    }, 2000);
+    
+  }, aiThinkingDelay);
+}
+
+function checkPlay(mark) {
+  const gameOverDelay = 2000;
+  if (hasWon()) {
+    setTimeout(function() {
+      gameOver(mark);
+    }, gameOverDelay);
+    
+  } else if (game.turnsPlayed >= 9) {
+    setTimeout(function() {
+      gameOver("draw");
+    }, gameOverDelay);
+    
+  } else {
+    game.playerTurn = !game.playerTurn;
+    if (!game.playerTurn) aiPlay();
+  }
+}
+
+function spaceFree(board, row, col) {
+  return (board[row][col] === null)
+}
+
+function makePlay(mark, row, col) {
+  game.board[row][col] = mark;
+  game.turnsPlayed++;
+  
+  var cellId = "#c" + row + "" + col;
+  $(cellId).text(mark);
+  $(cellId).addClass("cell-selected");
+}
+
+function minimax(state, depth){
+  var gameState = JSON.parse(JSON.stringify(state));
+  
+  if (gameState.gameOver){
+    return getScore(gameState, depth);
+  } else {
+    depth++;
+    var moves = [];
+    var scores = [];
+    
+    moves = generateAllAvailableMoves(gameState);
+    
+    for (var i = 0; i < moves.length; i++) {
+      var possibleGameState = generatePossibleGame(gameState, moves[i]);
+      scores.push(minimax(possibleGameState, depth));
+    }
+    
+    if (gameState.playerTurn) {
+      var maxScoreIndex = findIndexOfMax(scores);
+      game.nextMove = moves[maxScoreIndex];
+      return scores[maxScoreIndex]; 
+    } else {
+      var minScoreIndex = findIndexOfMin(scores);
+      game.nextMove = moves[minScoreIndex];
+      return scores[minScoreIndex];
+    }
+  }
+}
+
+function getScore(gameState, depth) {
+  if (gameState.gameOver && gameState.winner === gameState.playerMark) {
+    return 10 - depth;
+  } else if (gameState.gameOver && gameState.winner === gameState.aiMark) {
+    return depth - 10;
+  } else {
+    return 0;
+  }
+}
+
+function generateAllAvailableMoves(gameState){
+  const rowLength = 3;
+  const colLength = 3;
+  var availableMoves = [];
+  
+  for (var row = 0; row < rowLength; row++){
+    for (var col = 0; col < colLength; col++){
+      if (spaceFree(gameState.board, row, col)){
+        availableMoves.push([row, col]);
+      }
+    }
+  }
+  return availableMoves;
+}
+
+function generatePossibleGame(state, move){
+  var gameState = JSON.parse(JSON.stringify(state));
+  
+  if (gameState.playerTurn){
+    gameState.board[move[0]][move[1]] = gameState.playerMark;
+  } else {
+    gameState.board[move[0]][move[1]] = gameState.aiMark;
+  }
+  gameState.turnsPlayed++;
+  
+  if (checkWin(gameState)) {
+    gameState.gameOver = true;
+    if (gameState.playerTurn){
+      gameState.winner = gameState.playerMark;
+    } else {
+      gameState.winner = gameState.aiMark;
+    }
+  } else if (gameState.turnsPlayed >= 9) {
+    gameState.gameOver = true;
+    gameState.winner = "draw";
+  } else {
+    gameState.playerTurn = !gameState.playerTurn;
+  }
+  
+  return gameState;
+}
+
+function findIndexOfMax(arr) {
+  var maxIndex = 0;
+  if (arr.length > 1) {
+    for (var i = 1; i < arr.length; i++){
+      if (arr[i] > arr[maxIndex]){
+        maxIndex = i;
+      }
+    }
+  }
+  return maxIndex;
+}
+
+function findIndexOfMin(arr) {
+  var minIndex = 0;
+  if (arr.length > 1) {
+    for (var i = 1; i < arr.length; i++){
+      if (arr[i] < arr[minIndex]){
+        minIndex = i;
+      }
+    }
+  }
+  return minIndex;
+}
+
+function checkWin(gameState) {
+  const numRows = 3;
+  const numCols = 3;
+
+  if (gameState.board[0][0] === gameState.board[1][1] &&
+    gameState.board[1][1] === gameState.board[2][2] &&
+    gameState.board[0][0] !== null) {
+    return true;
+  }
+
+  if (gameState.board[0][2] === gameState.board[1][1] &&
+    gameState.board[1][1] === gameState.board[2][0] &&
+    gameState.board[0][2] !== null) {
+    return true;
+  }
+
+  for (var row = 0; row < numRows; row++) {
+    if (gameState.board[row][0] === gameState.board[row][1] &&
+      gameState.board[row][1] === gameState.board[row][2] &&
+      gameState.board[row][0] !== null) {
+      return true;
+    }
+  }
+
+  for (var col = 0; col < numCols; col++) {
+    if (gameState.board[0][col] === gameState.board[1][col] &&
+      gameState.board[1][col] === gameState.board[2][col] &&
+      gameState.board[0][col] !== null) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function hasWon() {
+  const numRows = 3;
+  const numCols = 3;
+
+  if (game.board[0][0] === game.board[1][1] &&
+    game.board[1][1] === game.board[2][2] &&
+    game.board[0][0] !== null) {
+    $("#c00").addClass("cell-win");
+    $("#c11").addClass("cell-win");
+    $("#c22").addClass("cell-win");
+    return true;
+  }
+
+  if (game.board[0][2] === game.board[1][1] &&
+    game.board[1][1] === game.board[2][0] &&
+    game.board[0][2] !== null) {
+    $("#c02").addClass("cell-win");
+    $("#c11").addClass("cell-win");
+    $("#c20").addClass("cell-win");
+    return true;
+  }
+
+  for (var row = 0; row < numRows; row++) {
+    if (game.board[row][0] === game.board[row][1] &&
+      game.board[row][1] === game.board[row][2] &&
+      game.board[row][0] !== null) {
+      $("#c" + row + "0").addClass("cell-win");
+      $("#c" + row + "1").addClass("cell-win");
+      $("#c" + row + "2").addClass("cell-win");
+      return true;
+    }
+  }
+
+  for (var col = 0; col < numCols; col++) {
+    if (game.board[0][col] === game.board[1][col] &&
+      game.board[1][col] === game.board[2][col] &&
+      game.board[0][col] !== null) {
+      $("#c0" + col).addClass("cell-win");
+      $("#c1" + col).addClass("cell-win");
+      $("#c2" + col).addClass("cell-win");
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function gameOver(winCase) {
+  $("#game-grid").hide();
+  $("#game-over").fadeIn(500);
+
+  if (winCase === game.playerMark) {
+    $("#game-end-heading").text("You have claimed victory.");
+    $("#game-end-subheading").text("May you bathe in tic-tac-toe glory.");
+    
+  } else if (winCase === game.aiMark) {
+    $("#game-end-heading").text("Alas, the computer has claimed victory!");
+    $("#game-end-subheading").text("May they bathe their circuits in tic-tac-toe glory.");
+  } else {
+    $("#game-end-heading").text("X and O, ancient enemies, have concluded their bout in a draw.");
+    $("#game-end-subheading").text("Perhaps their feud will be settled in another life, another dimension...");
+  }
+}
+
+$gameResetBtn.on('click', resetGame);
+
+function resetGame() {
+  $("#game-over").hide();
+  $("#game-grid").hide();
+  $("#game-configuration").fadeIn(500);
+
+  $(".game-cell").empty();
+  $(".cell").removeClass("cell-selected");
+  $(".cell").removeClass("cell-win");
+
+  game.board = [
+    [null, null, null],
+    [null, null, null],
+    [null, null, null]
+  ];
+  game.turnsPlayed = 0;
+  game.playerTurn = true;
+}
+
+</script>
+
+</body>
+</html>

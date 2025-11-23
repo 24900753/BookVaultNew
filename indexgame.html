@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Game Selector</title>
+
+<!-- GOOGLE FONT -->
+<link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+
+<style>
+
+/* FULL SCREEN BACKGROUND */
+body {
+  margin: 0;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Share Tech Mono";
+  background: radial-gradient(circle at center, #25003e, #000000);
+}
+
+/* ANIMATED PARTICLE BACKGROUND */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+/* CENTER BOX */
+.container {
+  text-align: center;
+  background: rgba(255,255,255,0.15);
+  padding: 40px;
+  border-radius: 15px;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 30px rgba(255,255,255,0.4);
+}
+
+/* BUTTON STYLE */
+.game-btn {
+  padding: 15px 45px;
+  margin: 20px;
+  font-size: 24px;
+  color: white;
+  border: 2px solid white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  background: transparent;
+}
+
+.game-btn:hover {
+  transform: scale(1.15);
+  background: rgba(255,255,255,0.2);
+}
+
+</style>
+</head>
+<body>
+
+<!-- 🔥 MOUSE FIRE EFFECT -->
+<canvas id="sparkCanvas"></canvas>
+
+<div class="container">
+  <h1 style="color:white;">SELECT A GAME</h1>
+
+  <a href="game1.html">
+    <button class="game-btn">GAME 1</button>
+  </a>
+
+  <a href="game2.html">
+    <button class="game-btn">GAME 2</button>
+  </a>
+</div>
+
+
+<script>
+// ========== FIRE MOUSE TRAIL ANIMATION ==========
+const canvas = document.getElementById("sparkCanvas");
+const ctx = canvas.getContext("2d");
+
+let sparks = [];
+
+function setCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+window.addEventListener("resize", setCanvas);
+setCanvas();
+
+document.addEventListener("mousemove", function(e) {
+  for (let i = 0; i < 6; i++) {
+    sparks.push({
+      x: e.clientX,
+      y: e.clientY,
+      size: Math.random() * 6 + 2,
+      speedX: (Math.random() - 0.5) * 3,
+      speedY: (Math.random() - 0.5) * 3,
+      alpha: 1
+    });
+  }
+});
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  sparks.forEach((p, index) => {
+    p.x += p.speedX;
+    p.y += p.speedY;
+    p.alpha -= 0.02;
+
+    ctx.fillStyle = `rgba(255, ${Math.random()*200}, 0, ${p.alpha})`;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (p.alpha <= 0) sparks.splice(index, 1);
+  });
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+</body>
+</html>

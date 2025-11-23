@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | BookVault</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(to bottom right, #fffdfb, #fce8e8);
+      color: #2e1b1b;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 70px;
+      background: rgba(255, 255, 255, 0.9);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+      backdrop-filter: blur(8px);
+      animation: fadeDown 1s ease;
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: "Playfair Display", serif;
+      font-size: 1.8em;
+      color: #832323;
+    }
+
+    .back-home {
+      background: #832323;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    .back-home:hover {
+      background: #a34747;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .contact-section {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 120px 20px;
+    }
+
+    .contact-box {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.1);
+      max-width: 850px;
+      width: 100%;
+      padding: 40px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      animation: fadeUp 1.2s ease;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .contact-info, .contact-form {
+      flex: 1;
+      min-width: 320px;
+    }
+
+    .contact-info h2 {
+      font-family: "Playfair Display", serif;
+      font-size: 2em;
+      color: #421d1d;
+      margin-bottom: 10px;
+    }
+
+    .contact-info p {
+      color: #6b4b4b;
+      margin-bottom: 10px;
+      font-size: 1.05em;
+    }
+
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid #e1cfcf;
+      margin-bottom: 20px;
+      font-size: 1em;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .contact-form input:focus, .contact-form textarea:focus {
+      border-color: #b64b4b;
+      box-shadow: 0 0 10px rgba(182, 75, 75, 0.15);
+    }
+
+    .contact-form button {
+      width: 100%;
+      background: #792b2b;
+      color: white;
+      border: none;
+      padding: 14px 0;
+      font-size: 1.1em;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 600;
+    }
+
+    .contact-form button:hover {
+      background: #a34747;
+      transform: scale(1.03);
+    }
+
+    .made-by-btn {
+      display: inline-block;
+      margin-top: 15px;
+      background: linear-gradient(135deg, #832323, #b64b4b);
+      color: white;
+      padding: 10px 22px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(131, 35, 35, 0.3);
+      animation: pulse 1.8s infinite;
+      transition: 0.3s ease;
+    }
+
+    .made-by-btn:hover {
+      transform: scale(1.08);
+      background: linear-gradient(135deg, #b64b4b, #832323);
+      box-shadow: 0 6px 18px rgba(131, 35, 35, 0.4);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 20px;
+      background: #fff;
+      color: #8c6b6b;
+      font-size: 0.9em;
+      border-top: 1px solid #f2dada;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">🕮 BookVault</div>
+    <a href="index.html" class="back-home">← Back to Home</a>
+  </header>
+
+  <section class="contact-section">
+    <div class="contact-box">
+      <div class="contact-info">
+        <h2>Get in Touch</h2>
+        <p><strong>Email:</strong> vignesh.vgm9363@gmail.com</p>
+        <p><strong>Support:</strong> We typically respond within 24 hours.</p>
+        <a href="made.html" class="made-by-btn">💫 Made by</a>
+      </div>
+
+      <form class="contact-form" onsubmit="sendMessage(event)">
+        <input id="contact-name" type="text" placeholder="Your Name" required />
+        <input id="contact-email" type="email" placeholder="your.email@example.com" required />
+        <textarea id="contact-message" rows="5" placeholder="Tell us what's on your mind..." required></textarea>
+        <button type="submit">✉️ Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>© 2025 BookVault | Designed by Vignesh 💫</footer>
+
+
+  <!-- EmailJS Script -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+  <script>
+    (function(){
+        emailjs.init("oa6ekMgO49ULPmiV5"); // PUBLIC KEY
+    })();
+
+    function sendMessage(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("contact-name").value;
+      const email = document.getElementById("contact-email").value;
+      const message = document.getElementById("contact-message").value;
+
+      const params = {
+        name: name,
+        email: email,
+        message: message,
+        title: "New Contact Message"
+      };
+
+      emailjs.send("service_dhx08zi", "template_8fs1czb", params)
+        .then(() => {
+          alert("Message Sent Successfully! 💌");
+          document.getElementById("contact-name").value = "";
+          document.getElementById("contact-email").value = "";
+          document.getElementById("contact-message").value = "";
+        })
+        .catch(() => {
+          alert("Message Failed ❌ Please try again.");
+        });
+    }
+  </script>
+
+</body>
+</html>

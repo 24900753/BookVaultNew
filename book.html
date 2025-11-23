@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BookVault | Top Books</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background-color: #fdfcfb;
+      color: #2d2d2d;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: linear-gradient(to right, #fff7f7, #fdf6f6);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #6b1b1b;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #6b1b1b;
+      margin: 0 15px;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    nav a:hover, nav a.active {
+      border-bottom: 2px solid #6b1b1b;
+      padding-bottom: 3px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 70px 20px 30px;
+      background: linear-gradient(to bottom, #fff9f7, #fdfcfb);
+    }
+
+    .hero h1 {
+      font-size: 40px;
+      margin-bottom: 10px;
+      color: #2c1b10;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #5b4636;
+      margin-bottom: 30px;
+    }
+
+    .search-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-box input {
+      width: 400px;
+      max-width: 90%;
+      padding: 12px 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .search-box button {
+      padding: 12px 25px;
+      background-color: #6b1b1b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+    }
+
+    .search-box button:hover {
+      background: linear-gradient(90deg, #6b1b1b, #ff7070, #6b1b1b);
+      background-size: 300%;
+      animation: electric 1s linear infinite;
+    }
+
+    @keyframes electric {
+      0% { box-shadow: 0 0 10px #ff7b7b; }
+      50% { box-shadow: 0 0 20px #ffb6b6; }
+      100% { box-shadow: 0 0 10px #ff7b7b; }
+    }
+
+    .book-section {
+      padding: 40px 60px;
+      transition: all 0.5s ease;
+    }
+
+    .book-section h3 {
+      color: #5a3c3c;
+      font-size: 22px;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .book-card {
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .book-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    .book-card img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+    }
+
+    .book-info {
+      padding: 15px 20px;
+    }
+
+    .book-info h4 {
+      font-size: 18px;
+      color: #3c1b1b;
+      margin-bottom: 4px;
+    }
+
+    .book-info p.author {
+      color: #7a5555;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .book-info p.desc {
+      color: #4b3e3e;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .book-buttons {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px 15px 20px;
+    }
+
+    .book-buttons button {
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: 'Georgia', serif;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .read-btn {
+      background-color: #6b1b1b;
+      color: white;
+    }
+
+    .download-btn {
+      background-color: #e9d9c4;
+      color: #3c1b1b;
+    }
+
+    .read-btn:hover {
+      background-color: #541010;
+    }
+
+    .download-btn:hover {
+      background-color: #d9c2aa;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #7a7a7a;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <span style="font-size: 20px;">🕮</span> BookVault
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="book.html" class="active">Books</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Our Book Collection</h1>
+    <p>Explore timeless classics and most read books.</p>
+    <div class="search-box">
+      <input type="text" placeholder="Search your favorite book..." />
+      <button onclick="goToCategory()">🔠 Category</button>
+    </div>
+  </section>
+
+  <section class="book-section">
+    <h3>📚 Most Reading Books</h3>
+    <div class="book-grid">
+      <!-- 8 top books -->
+      <div class="book-card">
+        <img src="download (2).jpeg" alt="Book 1">
+        <div class="book-info">
+          <h4>The Picture of Dorian Gray</h4>
+          <p class="author">Oscar Wilde</p>
+          <p class="desc">A philosophical tale about beauty and moral corruption.</p>
+        </div>
+        <div class="book-buttons">
+          <button class="read-btn" onclick="readBook('book1.pdf')">📖 Read</button>
+          <button class="download-btn" onclick="downloadBook('book1.pdf')">⬇ Download</button>
+        </div>
+      </div>
+
+      <div class="book-card">
+        <img src="https://images.unsplash.com/photo-1605111223827-8d8a3a66b1e5?q=80&w=800" alt="Book 2">
+        <div class="book-info">
+          <h4>Dracula</h4>
+          <p class="author">Bram Stoker</p>
+          <p class="desc">The legendary vampire story that defined gothic horror.</p>
+        </div>
+        <div class="book-buttons">
+          <button class="read-btn" onclick="readBook('book2.pdf')">📖 Read</button>
+          <button class="download-btn" onclick="downloadBook('book2.pdf')">⬇ Download</button>
+        </div>
+      </div>
+
+      <div class="book-card">
+        <img src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=800" alt="Book 3">
+        <div class="book-info">
+          <h4>Rich Dad Poor Dad</h4>
+          <p class="author">Robert Kiyosaki</p>
+          <p class="desc">The financial wisdom book that changed millions of lives.</p>
+        </div>
+        <div class="book-buttons">
+          <button class="read-btn" onclick="readBook('book3.pdf')">📖 Read</button>
+          <button class="download-btn" onclick="downloadBook('book3.pdf')">⬇ Download</button>
+        </div>
+      </div>
+
+      <div class="book-card">
+        <img src="https://images.unsplash.com/photo-1589820296156-2454bb8a6b4b?q=80&w=800" alt="Book 4">
+        <div class="book-info">
+          <h4>Bossypants</h4>
+          <p class="author">Tina Fey</p>
+          <p class="desc">Hilarious life lessons from the comedy queen Tina Fey.</p>
+        </div>
+        <div class="book-buttons">
+          <button class="read-btn" onclick="readBook('book4.pdf')">📖 Read</button>
+          <button class="download-btn" onclick="downloadBook('book4.pdf')">⬇ Download</button>
+        </div>
+      </div>
+
+      <div class="book-card">
+        <img src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?q=80&w=800" alt="Book 5">
+        <div class="book-info">
+          <h4>The Alchemist</h4>
+          <p class="author">Paulo Coelho</p>
+          <p class="desc">A journey of destiny, dreams, and self-discovery.</p>
+        </div>
+        <div class="book-buttons">
+          <button class="read-btn" onclick="readBook('book5.pdf')">📖 Read</button>
+          <button class="download-btn" onclick="downloadBook('book5.pdf')">⬇ Download</button>
+        </div>
+      </div>
+
+      <div class="book-card">
+        <img src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d?q=80&w=800" alt="Book 6">
+        <div class="book-info">
+          <h4>Atomic Habits</h4>
+          <p class="author">James Clear</p>
+          <p class="desc">Build good habits, break bad ones, and transform your life.</p>
+        </div>
+        <div class="book-buttons">
+          <button class="read-btn" onclick="readBook('book6.pdf')">📖 Read</button>
+          <button class="download-btn" onclick="downloadBook('book6.pdf')">⬇ Download</button>
+        </div>
+      </div>
+
+      <div class="book-card">
+        <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=800" alt="Book 7">
+        <div class="book-info">
+          <h4>1984</h4>
+          <p class="author">George Orwell</p>
+          <p class="desc">A dystopian story about power, control, and truth.</p>
+        </div>
+        <div class="book-buttons">
+          <button class="read-btn" onclick="readBook('book7.pdf')">📖 Read</button>
+          <button class="download-btn" onclick="downloadBook('book7.pdf')">⬇ Download</button>
+        </div>
+      </div>
+
+      <div class="book-card">
+        <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=800" alt="Book 8">
+        <div class="book-info">
+          <h4>The Subtle Art of Not Giving a F*ck</h4>
+          <p class="author">Mark Manson</p>
+          <p class="desc">A brutally honest approach to living a better life.</p>
+        </div>
+        <div class="book-buttons">
+          <button class="read-btn" onclick="readBook('book8.pdf')">📖 Read</button>
+          <button class="download-btn" onclick="downloadBook('book8.pdf')">⬇ Download</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>© 2025 BookVault. All rights reserved.</footer>
+
+  <script>
+    function goToCategory() {
+      window.location.href = "category.html";
+    }
+
+    function isLoggedIn() {
+      return localStorage.getItem("loggedInUser") !== null;
+    }
+
+    function readBook(pdfFile) {
+      if (!isLoggedIn()) {
+        alert("Please login to read books.");
+        window.location.href = "login.html";
+        return;
+      }
+      window.open(pdfFile, "_blank");
+    }
+
+    function downloadBook(pdfFile) {
+      if (!isLoggedIn()) {
+        alert("Please login to download books.");
+        window.location.href = "login.html";
+        return;
+      }
+      const a = document.createElement("a");
+      a.href = pdfFile;
+      a.download = pdfFile;
+      a.click();
+    }
+  </script>
+</body>
+</html>

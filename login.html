@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script src="main.js" defer type="module"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BookVault | Login</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    * {margin:0;padding:0;box-sizing:border-box;}
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg,#fff3f3,#fbeaea,#fce8e8);
+      height:100vh;display:flex;justify-content:center;align-items:center;
+      overflow:hidden;animation: fadeIn 1.5s ease-in-out;position: relative;
+    }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
+
+    .falling-icon {
+      position: absolute;top: -10%;font-size: 70px;opacity: 0.8;
+      color: rgba(131,35,35,0.9);animation: fall linear infinite;user-select: none;z-index: 1;
+    }
+    @keyframes fall {0% { transform: translateY(-10%) rotate(0deg);}100% { transform: translateY(110vh) rotate(360deg);} }
+
+    .login-box {
+      width:400px;background:#fff;padding:50px 40px;border-radius:25px;
+      box-shadow:0 10px 35px rgba(0,0,0,0.1);text-align:center;animation: popUp 1.2s ease;
+      z-index: 10;position: relative;
+    }
+    @keyframes popUp {0%{transform:scale(0.9);opacity:0;}100%{transform:scale(1);opacity:1;}}
+
+    .login-box h2 { font-family:"Playfair Display",serif;font-size:2em;color:#832323;margin-bottom:10px; }
+    .login-box p {color:#7b4a4a;font-size:0.95em;margin-bottom:25px;}
+
+    .input-container { position: relative;width: 100%; }
+    .input-field {
+      width:100%;background:#fdf6f6;border:1px solid #f1d7d7;padding:12px 45px 12px 15px;
+      border-radius:10px;margin-bottom:18px;font-size:1em;color:#4a2a2a;
+    }
+    .eye-icon { position: absolute;right: 10px;top: 50%;transform: translateY(-50%);cursor: pointer; }
+
+    .login-btn {
+      width:100%;background:linear-gradient(45deg,#b64b4b,#e08b8b);border:none;color:#fff;
+      padding:13px 0;border-radius:10px;font-size:1.1em;cursor:pointer;font-weight:600;
+    }
+
+    .google-btn{
+      width:100%;background:#fff;border:1px solid #ddd;border-radius:10px;padding:10px 0;
+      display:flex;justify-content:center;align-items:center;gap:10px;cursor:pointer;
+    }
+
+    .back-home{margin-top:25px;display:inline-block;}
+    footer{position:absolute;bottom:10px;text-align:center;width:100%;}
+  </style>
+</head>
+
+<body>
+
+  <div id="icons"></div>
+
+  <div class="login-box">
+    <h2>Welcome Back to 🕮BookVault</h2>
+    <p>Login to access reading & downloading features.</p>
+
+    <form onsubmit="validateLogin(event)">
+      <input type="text" id="username" class="input-field" placeholder="Email" required />
+
+      <div class="input-container">
+        <input type="password" id="password" class="input-field" placeholder="Password" required />
+        <span class="eye-icon" onclick="togglePassword()" id="toggleEye">👁️</span>
+      </div>
+
+      <button type="submit" class="login-btn">Login</button>
+    </form>
+
+    <div class="divider">or</div>
+
+    <button id="google-btn" class="google-btn">📧 Continue with Google</button>
+
+    <!-- NEW: SIGNUP BUTTON (same UI design) -->
+    <button id="signup-btn" class="google-btn" style="margin-top:10px;">✨ Create New Account</button>
+
+    <a href="index.html" class="back-home">← Back to Home</a>
+  </div>
+
+  <footer>© 2025 BookVault | Designed by Vignesh 💫</footer>
+
+  <script>
+    function togglePassword() {
+      const passField = document.getElementById("password");
+      const eye = document.getElementById("toggleEye");
+
+      if (passField.type === "password") {
+        passField.type = "text"; eye.textContent = "🙈";
+      } else {
+        passField.type = "password"; eye.textContent = "👁️";
+      }
+    }
+
+    const icons = ["📚","✍️","🎧","📖"];
+    const iconContainer = document.getElementById("icons");
+    function createIcon() {
+      const icon = document.createElement("div");
+      icon.classList.add("falling-icon");
+      icon.textContent = icons[Math.floor(Math.random() * icons.length)];
+      icon.style.left = Math.random() * 100 + "vw";
+      icon.style.animationDuration = (6 + Math.random() * 5) + "s";
+      iconContainer.appendChild(icon);
+      setTimeout(() => icon.remove(), 10000);
+    }
+    setInterval(createIcon, 400);
+  </script>
+
+</body>
+</html>
